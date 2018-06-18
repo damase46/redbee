@@ -20,6 +20,11 @@ public class ComentarioListener {
     @RabbitListener(queues = "queueComment")
     public void receiveMessage(final Comentario comment) {
         logger.info("Received comment : {}", comment.toString());
+
+        //a la hora de persistir lo concatenaria con el id del usuario para no manejar autoincrement
+        if(comment.getId() == null){
+            comment.setId(comment.getDate().getTime());
+        }
         comentarioRepository.insert(comment);
     }
 }

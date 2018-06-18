@@ -43,7 +43,6 @@ public class RabbitConf implements RabbitListenerConfigurer{
         return new Queue(QUEUE_COMMENT);
     }
 
-
     @Bean
     public DefaultMessageHandlerMethodFactory messageHandlerMethodFactory() {
         DefaultMessageHandlerMethodFactory factory = new DefaultMessageHandlerMethodFactory();

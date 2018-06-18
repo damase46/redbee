@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.logging.Logger;
 
 @RestController
@@ -34,9 +35,9 @@ public class ComentarioRestController {
         logger.info("Call mok");
 
         Comentario comment = new Comentario();
-        comment.setId(1L);
         comment.setComment("test");
         comment.setName("yo");
+        comment.setDate(new Date());
 
         comentarioService.updateComment(comment);
     }

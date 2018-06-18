@@ -16,7 +16,11 @@ public class Comentario{
 
     private String name;
 
+    @NotNull
     private String comment;
+
+    @NotNull
+    private Date date;
 
     @DBRef
     private List<Comentario> replies;
@@ -51,5 +55,13 @@ public class Comentario{
 
     public void setReplies(List<Comentario> replies) {
         this.replies = replies;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
