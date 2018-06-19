@@ -1,7 +1,8 @@
 package com.redbee.api.controller;
 
 import com.redbee.api.model.Comentario;
-import com.redbee.api.service.ComentarioService;
+import com.redbee.api.model.Hotel;
+import com.redbee.api.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,33 +15,28 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping(value = "/comment")
-public class ComentarioRestController {
+@RequestMapping(value = "/hotel")
+public class HotelRestController {
 
     Logger logger  = Logger.getLogger(TestRestController.class.getName());
 
     @Autowired
-    ComentarioService comentarioService;
+    HotelService hotelService;
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public void  update(@RequestBody @Valid Comentario comentario, BindingResult bindingResult){
+    public void  update(@RequestBody @Valid Hotel hotel, BindingResult bindingResult){
         logger.info("Call Update Comentario");
 
         if(bindingResult.hasErrors()){
             return;
         }
-        comentarioService.updateComment(comentario);
+        hotelService.updateHotel(hotel);
     }
 
     @RequestMapping(value = "/updateMok",method = RequestMethod.GET)
     public void  updateMok(){
         logger.info("Call mok");
-
-        Comentario comment = new Comentario();
-        comment.setComment("test");
-        comment.setName("yo");
-        comment.setDate(new Date());
-
-        comentarioService.updateComment(comment);
+        Hotel hotel = new Hotel();
+        hotelService.updateHotel(hotel);
     }
 }

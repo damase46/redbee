@@ -22,6 +22,7 @@ public class RabbitConf implements RabbitListenerConfigurer{
     public static final String ROUTING_KEY = "messages.key";
 
     public static final String QUEUE_COMMENT = "queueComment";
+    public static final String QUEUE_HOTEL = "queueHotel";
 
     @Override
     public void configureRabbitListeners(RabbitListenerEndpointRegistrar rabbitListenerEndpointRegistrar) {
@@ -41,6 +42,11 @@ public class RabbitConf implements RabbitListenerConfigurer{
     @Bean
     public Queue queueComment() {
         return new Queue(QUEUE_COMMENT);
+    }
+
+    @Bean
+    public Queue queueHotel() {
+        return new Queue(QUEUE_HOTEL);
     }
 
     @Bean
@@ -68,12 +74,15 @@ public class RabbitConf implements RabbitListenerConfigurer{
     }
 
     @Bean
-    public Binding declareBindingGeneric() {
-        return BindingBuilder.bind(appQueueGeneric()).to(appExchange()).with(ROUTING_KEY);
-    }
+    public Binding declareBindingGeneric() { return BindingBuilder.bind(appQueueGeneric()).to(appExchange()).with(ROUTING_KEY); }
 
     @Bean
     public Binding commentBinding() {
         return BindingBuilder.bind(queueComment()).to(appExchange()).with(ROUTING_KEY);
+    }
+
+    @Bean
+    public Binding hotelBinding() {
+        return BindingBuilder.bind(queueHotel()).to(appExchange()).with(ROUTING_KEY);
     }
 }

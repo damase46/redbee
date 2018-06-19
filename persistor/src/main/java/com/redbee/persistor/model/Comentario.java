@@ -25,6 +25,14 @@ public class Comentario{
     @DBRef
     private List<Comentario> replies;
 
+    public Comentario(){
+
+    }
+
+    public Comentario(Long id){
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
