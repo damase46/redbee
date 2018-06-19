@@ -32,15 +32,4 @@ public class ComentarioRestController {
         comentarioService.updateComment(comentario);
     }
 
-    @RequestMapping(value = "/updateMok",method = RequestMethod.GET)
-    public void  updateMok(){
-        logger.info("Call mok");
-
-        Comentario comment = new Comentario();
-        comment.setComment("test");
-        comment.setName("yo");
-        comment.setDate(new Date());
-
-        comentarioService.updateComment(comment);
-    }
 }

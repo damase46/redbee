@@ -28,32 +28,12 @@ public class ComentarioService {
     public void updateComment(Comentario comentario){
 
         logger.info("Call update comentario service");
-        verifyIntegrity(comentario).thenAccept(x -> sendToPersist(x));
-    }
-
-    private CompletableFuture<Comentario> verifyIntegrity(Comentario comentario){
-
-        return CompletableFuture.supplyAsync(() -> {
-
-            Comentario com = validateId(comentario);
-
-            return com ;
-        });
-
+        sendToPersist(comentario);
     }
 
     private void sendToPersist(Comentario comentario) {
         rabbitTemplate.convertAndSend(RabbitConf.QUEUE_COMMENT, comentario);
+
     }
 
-    public Comentario validateId (Comentario comentario){
-        //lo concatenaria con el id del usuario para no manejar autoincrement
-        if(comentario.getId() == null){
-            comentario.setDate(new Date());
-            comentario.setId(comentario.getDate().getTime());
-        }else{
-            return comentarioRepository.existsById(comentario.getId()) ? comentario: null;
-        }
-        return comentario;
-    }
 }

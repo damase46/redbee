@@ -26,16 +26,7 @@ public class HotelService {
 
     public void updateHotel(Hotel hotel){
         logger.info("Call update comentario service");
-
-        verifyIntegrity(hotel).thenAccept(x -> sendToPersist(x));
-
-    }
-
-    private CompletableFuture<Hotel> verifyIntegrity(Hotel hotel){
-
-        return CompletableFuture.supplyAsync(() -> {
-            return hotel;
-        });
+        sendToPersist(hotel);
 
     }
 

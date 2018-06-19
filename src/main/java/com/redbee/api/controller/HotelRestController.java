@@ -25,7 +25,7 @@ public class HotelRestController {
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     public void  update(@RequestBody @Valid Hotel hotel, BindingResult bindingResult){
-        logger.info("Call Update Comentario");
+        logger.info("Call Update Hotel");
 
         if(bindingResult.hasErrors()){
             return;
@@ -33,10 +33,4 @@ public class HotelRestController {
         hotelService.updateHotel(hotel);
     }
 
-    @RequestMapping(value = "/updateMok",method = RequestMethod.GET)
-    public void  updateMok(){
-        logger.info("Call mok");
-        Hotel hotel = new Hotel();
-        hotelService.updateHotel(hotel);
-    }
 }
