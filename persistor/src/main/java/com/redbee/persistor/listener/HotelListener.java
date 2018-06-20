@@ -18,9 +18,16 @@ public class HotelListener {
     HotelRepository hotelRepository;
 
     @RabbitListener(queues = "queueHotel")
-    public void receiveMessage(final Hotel hotel) {
+    public void update(final Hotel hotel) {
 
         logger.info("Received hotel : {}", hotel.toString());
         hotelRepository.save(hotel);
+    }
+
+    @RabbitListener(queues = "queueCustomHotel")
+    public void updateCustom(final Hotel hotel) {
+
+        logger.info("Received hotel : {}", hotel.toString());
+        hotelRepository.saveCustom(hotel);
     }
 }

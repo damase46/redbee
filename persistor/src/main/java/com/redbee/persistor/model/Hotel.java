@@ -2,14 +2,15 @@ package com.redbee.persistor.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@Document(collection = "hotel")
 public class Hotel {
 
     @Id
-    @NotNull
     private Long id;
 
     private String name;

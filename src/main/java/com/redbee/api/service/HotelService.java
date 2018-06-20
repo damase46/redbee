@@ -26,11 +26,17 @@ public class HotelService {
 
     public void updateHotel(Hotel hotel){
         logger.info("Call update comentario service");
-        sendToPersist(hotel);
+        sendToPersist(hotel, RabbitConf.QUEUE_HOTEL);
 
     }
 
-    private void sendToPersist(Hotel hotel) {
-        rabbitTemplate.convertAndSend(RabbitConf.QUEUE_COMMENT, hotel);
+    public void updateCustomHotel(Hotel hotel){
+        logger.info("Call update comentario service");
+        sendToPersist(hotel, RabbitConf.QUEUE_CUSTOM_HOTEL);
+
+    }
+
+    private void sendToPersist(Hotel hotel, String queue) {
+        rabbitTemplate.convertAndSend(queue, hotel);
     }
 }

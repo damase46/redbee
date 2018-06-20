@@ -16,10 +16,8 @@ public class Comentario{
 
     private String name;
 
-    @NotNull
     private String comment;
 
-    @NotNull
     private Date date;
 
     @DBRef

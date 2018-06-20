@@ -17,9 +17,16 @@ public class ComentarioListener {
     ComentarioRepository comentarioRepository;
 
     @RabbitListener(queues = "queueComment")
-    public void receiveMessage(final Comentario comment) {
+    public void updateComment(final Comentario comment) {
 
         logger.info("Received comment : {}", comment.toString());
         comentarioRepository.save(comment);
+    }
+
+    @RabbitListener(queues = "queueCustomComment")
+    public void updateCustomComment(final Comentario comment) {
+
+        logger.info("Received comment : {}", comment.toString());
+        comentarioRepository.saveCustom(comment);
     }
 }

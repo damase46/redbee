@@ -22,17 +22,20 @@ public class ComentarioService {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    @Autowired
-    ComentarioRepository comentarioRepository;
-
     public void updateComment(Comentario comentario){
 
         logger.info("Call update comentario service");
-        sendToPersist(comentario);
+        sendToPersist(comentario, RabbitConf.QUEUE_COMMENT);
     }
 
-    private void sendToPersist(Comentario comentario) {
-        rabbitTemplate.convertAndSend(RabbitConf.QUEUE_COMMENT, comentario);
+    public void updateCustomComment(Comentario comentario){
+
+        logger.info("Call update comentario service");
+        sendToPersist(comentario, RabbitConf.QUEUE_CUSTOM_COMMENT);
+    }
+
+    private void sendToPersist(Comentario comentario, String queue) {
+        rabbitTemplate.convertAndSend(queue, comentario);
 
     }
 

@@ -32,4 +32,14 @@ public class ComentarioRestController {
         comentarioService.updateComment(comentario);
     }
 
+    @RequestMapping(value = "/updateCustom",method = RequestMethod.POST)
+    public void  updateCustom(@RequestBody @Valid Comentario comentario, BindingResult bindingResult){
+        logger.info("Call Update Comentario");
+
+        if(bindingResult.hasErrors()){
+            return;
+        }
+        comentarioService.updateCustomComment(comentario);
+    }
+
 }

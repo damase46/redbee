@@ -33,4 +33,14 @@ public class HotelRestController {
         hotelService.updateHotel(hotel);
     }
 
+    @RequestMapping(value = "/updateCustom",method = RequestMethod.POST)
+    public void  updateCustom(@RequestBody @Valid Hotel hotel, BindingResult bindingResult){
+        logger.info("Call Update Hotel");
+
+        if(bindingResult.hasErrors()){
+            return;
+        }
+        hotelService.updateCustomHotel(hotel);
+    }
+
 }

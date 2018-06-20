@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @ComponentScan(basePackages = "com.redbee" )
-@EnableMongoRepositories(basePackages = "com.redbee.persistor.repository")
+@EnableMongoRepositories(basePackages = "com.redbee.persistor")
 public class PersistorConfiguration {
 
 }
