@@ -1,4 +1,7 @@
 # redbee
+Supuestos:
+Suponemos que a la hora de persistir, una vez completada la tarea se notificara el estado (si hubo error o no) a un socket donde se tratara en su debida forma.
+
 El codigo refleja el siguiente problema:
 
 Problema:
