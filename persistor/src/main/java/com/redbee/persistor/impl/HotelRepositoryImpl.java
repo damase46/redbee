@@ -1,5 +1,6 @@
 package com.redbee.persistor.impl;
 
+import com.mongodb.DBRef;
 import com.mongodb.client.result.UpdateResult;
 import com.redbee.persistor.CustomSequenseService;
 import com.redbee.persistor.customer.HotelRepositoryCustomer;
@@ -49,15 +50,12 @@ public class HotelRepositoryImpl implements HotelRepositoryCustomer {
         Update update = new Update();
 
         if(hotel.getComments() != null && !hotel.getComments().isEmpty()){
-
-            List<Comentario> comments = new ArrayList<>();
+            List<DBRef> comments = new ArrayList<DBRef>();
             hotel.getComments().forEach(comentario -> {
-                Comentario newComment = new Comentario();
                 if(comentario.getId() == null){
                     comentario.setId(comentarioRepository.saveCustom(comentario));
                 }
-                newComment.setId(comentario.getId());
-                comments.add(comentario);
+                comments.add(new DBRef("comment",  comentario.getId()));
             });
             update.addToSet("comments", comments);
         }

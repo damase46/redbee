@@ -1,5 +1,6 @@
 package com.redbee.api;
 
+import com.redbee.persistor.CustomSequenseService;
 import com.redbee.persistor.model.Comentario;
 import com.redbee.persistor.model.Hotel;
 import com.redbee.persistor.repository.ComentarioRepository;
@@ -38,6 +39,9 @@ public class PersistorTest {
     @Autowired
     ComentarioRepository comentarioRepository;
 
+    @Autowired
+    CustomSequenseService customSequenseService;
+
     @Test
     public void initializeHotel(){
         List<Hotel> hotels = new ArrayList<Hotel>();
@@ -69,7 +73,7 @@ public class PersistorTest {
 
     private Hotel addHotel(int i) {
         Hotel hotel = new Hotel();
-        hotel.setId(new Long(i));
+        hotel.setId(customSequenseService.getLastId("hotelSequense"));
         hotel.setName("Random: "+i);
         hotel.setStars(new RandomDataGenerator().nextInt(1,5));
         hotel.setPrice(new RandomDataGenerator().nextUniform(500D, 1000D));
@@ -77,12 +81,8 @@ public class PersistorTest {
     }
 
     private Comentario addComment(int i){
-
-        try {
-            TimeUnit.MILLISECONDS.sleep(5);
-        }catch(InterruptedException ex){
-        }
         Comentario comentario = new Comentario();
+        comentario.setId(customSequenseService.getLastId("commentSequense"));
         comentario.setDate(new Date());
         comentario.setComment("Random: "+i);
         comentario.setName("Random Comment: "+i);

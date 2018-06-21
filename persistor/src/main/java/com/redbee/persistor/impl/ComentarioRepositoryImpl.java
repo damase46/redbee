@@ -1,6 +1,7 @@
 package com.redbee.persistor.impl;
 
 import com.mongodb.BasicDBObjectBuilder;
+import com.mongodb.DBRef;
 import com.mongodb.client.result.UpdateResult;
 import com.redbee.persistor.CustomSequenseService;
 import com.redbee.persistor.customer.ComentarioRepositoryCustomer;
@@ -39,18 +40,19 @@ public class ComentarioRepositoryImpl implements ComentarioRepositoryCustomer {
         }
 
         Criteria criteria = Criteria.where("_id").is(comentario.getId());
+        Query query = Query.query(criteria);
 
         Update update = new Update();
 
         if(comentario.getReplies() != null && !comentario.getReplies().isEmpty()){
-            List<Comentario> replies = new ArrayList<>();
+            List<DBRef> replies = new ArrayList<DBRef>();
             comentario.getReplies().forEach(reply -> {
                 if(reply.getId() == null){
                     reply.setId(saveCustom(comentario));
                 }
-                replies.add(reply);
+                replies.add(new DBRef("comment",reply.getId()));
             });
-            update.addToSet("replies", replies);
+            update.addToSet("replies").each(replies);
         }
 
         if(comentario.getDate() != null){
@@ -63,8 +65,9 @@ public class ComentarioRepositoryImpl implements ComentarioRepositoryCustomer {
             update.set("comment", comentario.getComment());
         }
 
-        Query query = Query.query(criteria);
-        mongoOperations.upsert(query, update ,Comentario.class);
-        return 0L;
+        mongoTemplate.upsert(query, update, "comment");
+
+        return comentario.getId();
     }
+
 }
