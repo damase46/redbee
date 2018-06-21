@@ -8,6 +8,59 @@ Problema:
 Actualmente con solo 2 entidades Hotel, Comentario. A la hora de realizar un update a un mensaje, o agregar un mensaje a un hotel deberia primero traerme todo el hotel con todos sus comentarios. Es decir, a la hora de agregar un comentario a un hotel tengo que traerme todos los comentarios que tiene para sumarle uno.
 Lo mismo sucede con comentario al agregar una respuesta.
 
+UPDATE
+Solucion: se creo un nuevo servicio updateCustom (server/api/hotel/updateCustom) donde se realiza el update/insert manualmente de las entidades con las herramientas que brinda MongoDB. (clases: HotelRepositoryImpl, ComentarioRepositoryImpl)
+
+Nota: inicializar secuencias: hotelSequense, commentSequense
+{
+    "_id" : "hotelSequense",
+    "seq" : 0
+},
+{
+    "_id" : "commentSequense",
+    "seq" : 0
+}
+
+Ejemplo de entrada:
+
+{
+  "name": "Hotel Stefanos",
+  "stars": 3,
+  "price": 994.18,
+  "comments": [
+    {
+      "name": "sergio",
+      "comment": "muy bueno"
+    }
+  ]
+}
+
+Resultado db
+
+Hotel: 
+{
+    "_id" : NumberLong(1),
+    "comments" : [ 
+        [ 
+            {
+                "$ref" : "comment",
+                "$id" : NumberLong(1)
+            }
+        ]
+    ],
+    "name" : "Hotel Stefanos",
+    "price" : 994.18,
+    "stars" : 3
+}
+
+Comentario:
+{
+    "_id" : NumberLong(1),
+    "comment" : "muy bueno",
+    "name" : "sergio"
+}
+
+OLD
 1. Solucion 1: Para el caso de que la entidad comentario no se pueda modificar
   - Crear una entidad intermedia en cada relacion (Hotel - comentario / comentario - comentario) de la siguiente forma:
 
